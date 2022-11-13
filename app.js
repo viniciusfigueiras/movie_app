@@ -24,11 +24,11 @@ app.listen(port, function(){
 app.get('/result', (req, res)=>{
    
     let set_language = "pt-BR";
-    let media = "tv"
     var media_id;
-    let genre_id = req.query.search;
-    console.log(genre_id);
-    
+    let options= req.query.search;
+    let genre_id = options[0];
+    let media =  options[1];
+
     getRandomId(randomIntFromInterval(1, 100));
 
 
@@ -36,7 +36,7 @@ app.get('/result', (req, res)=>{
 
         request(`https://api.themoviedb.org/3/discover/${media}?api_key=${API_KEY}&language=${set_language}&
     sort_by=popularity.desc&include_adult=false&with_genres=${genre_id}&include_video=false&page=${page_number}&
-    watch_region=BR`, (error, response, body) =>    {
+    watch_region=BR&with_watch_monetization_types=flatrate`, (error, response, body) =>    {
 
         if(error){
             console.log(error);
@@ -62,13 +62,12 @@ app.get('/result', (req, res)=>{
 
     const renderRandomPage = async(media_id) => {
 
-        let providers = await getProvider(media_id);
-        let local_providers = providers.results.BR;
+        let providers;
+        let local_providers;
 
-        console.log(Object.keys(local_providers));
-        
-        if(local_providers.hasOwnProperty("flatrate")) {
-            console.log(Object.keys(local_providers.flatrate[1].provider_name));
+        while(local_providers == null) {
+            providers = await getProvider(media_id);
+            local_providers = providers.results.BR.flatrate;
         }
 
         request(`https://api.themoviedb.org/3/${media}/${media_id}?api_key=${API_KEY}&language=${set_language}`, (error, response, body)=>{
@@ -77,7 +76,7 @@ app.get('/result', (req, res)=>{
             }else{
                 let data = JSON.parse(body);
     
-                res.render('result', {data: data, local_providers: local_providers});
+                res.render('result', {data: data, providers: local_providers});
             }  
         })
     }

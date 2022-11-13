@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>movieTutorial</title>
+  <title>Movie Randomizer</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/bootstrap-4.5.2-dist/css/bootstrap.min.css">  
@@ -24,17 +24,21 @@
         <!-- Jumbotron begins here -->
         <div class="pt-5">
             <div class="text-center text-warning p-3">
-                <h2>Search for movies, actors and directors</h2>
+                <h2>Find random movies and tv series</h2>
             </div>
             <div class="">
                 <form action="/result" method="GET" class="justify-content-center d-flex">
                     <!-- <input type="text" name="search" class="form-control w-25 bg-dark text-white" value="Avengers"> -->
-                    <label for="cars">Choose a genre:</label>
+                    <label for="genres">Choose a genre:</label>
                     <select id="genres" name="search">
-                      <option value="16">Anime</option>
+                      <option value="16">Animation</option>
                       <option value="99">Documentary</option>
                       <option value="">All</option>
                     </select> 
+                    <select id="media" name="search">
+                        <option value="movie">Movie</option>
+                        <option value="tv">TV Series</option>
+                      </select> 
                     <input type="submit" class="btn btn-warning ml-2" value="Search">
                 </form>
             </div>

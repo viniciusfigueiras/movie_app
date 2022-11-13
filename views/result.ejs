@@ -60,7 +60,14 @@
               <hr>
               <div><span class="badge  badge-warning text-black">Release: <strong><%=data['release_date']%></strong></span></div>
               <hr>
-              <!-- <div><span class="badge  badge-warning text-black">Providers: <strong><%=local_providers['provider_name']%></strong></span></div> -->
+              <div><span class="badge  badge-warning text-black">Providers:
+                <% providers.forEach(provider => {%>
+                  <div>
+                    <strong><%=provider['provider_name']%></strong>
+                  </div>
+                <%});%>             
+              </span></div>
+              <hr>
             </div>
           </div>
         </div>
