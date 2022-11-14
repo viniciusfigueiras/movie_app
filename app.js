@@ -28,7 +28,7 @@ app.get('/result', (req, res)=>{
     let options= req.query.search;
     let genre_id = options[0];
     let media =  options[1];
-
+    
     getRandomId(randomIntFromInterval(1, 100));
 
 
@@ -62,13 +62,19 @@ app.get('/result', (req, res)=>{
 
     const renderRandomPage = async(media_id) => {
 
-        let providers;
-        let local_providers;
+        let providers = await getProvider(media_id);
+        let local_providers = providers.results.BR;
+        var keys = [];
+        for(var k in providers.results.BR) keys.push(k);
 
-        while(local_providers == null) {
+        while(keys[1] !== "flatrate") {
+            keys = [];
+            for(var k in providers.results.BR) keys.push(k);
             providers = await getProvider(media_id);
-            local_providers = providers.results.BR.flatrate;
+            local_providers = providers.results.BR;
         }
+
+        console.log(local_providers[keys[1]]);
 
         request(`https://api.themoviedb.org/3/${media}/${media_id}?api_key=${API_KEY}&language=${set_language}`, (error, response, body)=>{
             if(error){

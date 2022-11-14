@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Results-N Movies</title>
+  <title>Result</title>
   <meta charset="utf-8">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,7 +35,17 @@
     <div class="container pt-3">
       <div class="p-3 sticky-top">
         <form action="/result" method="GET" class="justify-content-center d-flex">
-          <input type="search" name="search" class="form-control w-25 bg-dark text-white" placeholder="Search">
+          <!-- <input type="text" name="search" class="form-control w-25 bg-dark text-white" value="Avengers"> -->
+          <label for="genres">Choose a genre:</label>
+          <select id="genres" name="search">
+            <option value="16">Animation</option>
+            <option value="99">Documentary</option>
+            <option value="">All</option>
+          </select> 
+          <select id="media" name="search">
+              <option value="movie">Movie</option>
+              <option value="tv">TV Series</option>
+            </select> 
           <input type="submit" class="btn btn-warning ml-2" value="Search">
       </form>
       </div>
@@ -61,7 +71,7 @@
               <div><span class="badge  badge-warning text-black">Release: <strong><%=data['release_date']%></strong></span></div>
               <hr>
               <div><span class="badge  badge-warning text-black">Providers:
-                <% providers.forEach(provider => {%>
+                <% providers['flatrate'].forEach(provider => {%>
                   <div>
                     <strong><%=provider['provider_name']%></strong>
                   </div>
